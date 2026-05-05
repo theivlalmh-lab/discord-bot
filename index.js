@@ -431,4 +431,53 @@ client.on("messageCreate", async (message) => {
   }
 });
 
-client.login(TOKEN);
+client.login(TOKEN);// ===== الذكاء الاصطناعي =====
+
+const AI_CHANNEL = "˚₊·-͟͟͞🤖〡الــذكـاء・الاصطناعي";
+
+function aiResponse(text) {
+  text = text.toLowerCase();
+
+  if (text.includes("استثمار") || text.includes("السوق")) {
+    const tips = [
+      "📊 حاول تشتري لما السعر منخفض وتبيع لما يرتفع",
+      "💡 لا تستثمر كل فلوسك في شيء واحد",
+      "🔥 الأسهم فيها مخاطرة لكن أرباحها عالية",
+      "🏢 الأراضي استثمار آمن غالبًا",
+      "🚗 السيارات أسعارها تتغير بسرعة"
+    ];
+    return tips[Math.floor(Math.random() * tips.length)];
+  }
+
+  if (text.includes("كيف اغتني") || text.includes("فلوس")) {
+    return "💰 السر: يومي + استثمار + صبر 😈";
+  }
+
+  if (text.includes("افضل شيء")) {
+    return "🤖 الأفضل يعتمد على السوق الحالي، اكتب -السوق وشوف الأسعار";
+  }
+
+  // رد عام
+  const replies = [
+    "🤖 سؤال جميل 👀",
+    "🧠 خلني أفكر...",
+    "🔥 هذا يعتمد على وضعك في اللعبة",
+    "😈 واضح أنك ناوي تصير غني"
+  ];
+
+  return replies[Math.floor(Math.random() * replies.length)];
+}
+
+client.on("messageCreate", async (message) => {
+  if (message.author.bot) return;
+
+  // فقط روم الذكاء
+  if (!message.channel.name.includes(AI_CHANNEL)) return;
+
+  // يمنع الأوامر
+  if (message.content.startsWith("-")) return;
+
+  const reply = aiResponse(message.content);
+
+  message.reply(reply);
+});
